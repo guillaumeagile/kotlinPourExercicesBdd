@@ -17,11 +17,21 @@ class MachineCafeeTests : BehaviorSpec({
 
             then("le message est envoyé au Drink Maker") {
 
-                command shouldBe "T:1:0"
+                command shouldBe "T:1:1"
 
             }
         }
+
+        `when`("je demande un cHoco sans sucre et sans touillette") {
+
+            var command = machine.Command( drink = Drink.Chocolate, sugar = 0, stick = 0 )
+
+            then("le message est envoyé au Drink Maker") {
+
+                command shouldBe "H::"
+
+            }
     }
-}
+}}
 )
 
