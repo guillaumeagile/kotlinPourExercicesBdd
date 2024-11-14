@@ -67,7 +67,6 @@ class TenuesSpecificationsExecutables : BehaviorSpec({
 
 
             and("le prix de la robe est de 2100€") {
-
                 val prixDeLaRobe = 2100
 
                 `when` ("je veux savoir quel est le prix maximum pour le costume ") {
@@ -80,12 +79,38 @@ class TenuesSpecificationsExecutables : BehaviorSpec({
                 }
             }
 
+            and("le prix de la robe est de 2100€") {
+                val prixDeLaRobe = 2100
+
+                `when` ("je veux savoir si le prix de la robe rentre dans le budget") {
+
+                    val resultat = ValideLePrixDeLaRobe(prixDeLaRobe , budgetTotal)
+
+                    then("le résultat est NO WAY" ){
+                        resultat shouldBe false
+                    }
+                }
+            }
+
+            and("le prix de la robe est de 1900") {
+                val prixDeLaRobe = 1900
+
+                `when` ("je veux savoir si le prix de la robe rentre dans le budget") {
+
+                    val resultat = ValideLePrixDeLaRobe(prixDeLaRobe , budgetTotal)
+
+                    then("le résultat est 'ca paaaaasse'" ){
+                        resultat shouldBe true
+                    }
+                }
+            }
 
         }
     }})
 
-
-
+fun ValideLePrixDeLaRobe(prixDeLaRobe: Int, budgetTotal: Int): Boolean {
+  return  prixDeLaRobe < budgetTotal * 0.1
+}
 
 
 fun CalculPrixCostume(prixDeLaRobe: Int, budgetTotal: Int): Int {
