@@ -6,7 +6,7 @@ class DrinkMachine(paymentRequired: Boolean) {
         val codeStick = if (stick == 1) "0" else ""
         return when
                 (drink) {
-            Drink.Tea -> "T" + ":" + sugar.toString() + ":" + stick.toString()  //   "T:$sugar:$stick"
+            Drink.Tea ->  "T:$sugar:$stick" // "T" + ":" + sugar.toString() + ":" + stick.toString()
             Drink.Chocolate -> "H::"
             Drink.Coffee ->   "C:$sugar:$codeStick"
             else -> "Unknown drink"

@@ -11,10 +11,11 @@ class MachineCafeeTests : BehaviorSpec({
     //WHEN
     //THEN
     given("une machine à café payante") {
-        val machine = DrinkMachine(estPayante = true )
+        val machine = DrinkMachine(true )
 
         When("je met 1 euro dans la machine"){
             machine.InsertCoin(1.0 )
+
             And ("je demande un thé avec un sucre et une touillette") {
                 var command = machine.Command( drink = Drink.Tea, sugar = 1, stick = 1 )
 
