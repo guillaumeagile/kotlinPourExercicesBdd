@@ -1,6 +1,6 @@
 package org.example.coffeeMachine
 
-class MachineCafee(estPayante: Boolean) {
+class DrinkMachine(paymentRequired: Boolean) {
 
     fun Command(drink: Drink, sugar: Int, stick: Int): String {
         val codeStick = if (stick == 1) "0" else ""

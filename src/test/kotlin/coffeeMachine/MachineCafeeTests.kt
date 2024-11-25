@@ -3,7 +3,7 @@ package coffeeMachine
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 import org.example.coffeeMachine.Drink
-import org.example.coffeeMachine.MachineCafee
+import org.example.coffeeMachine.DrinkMachine
 
 class MachineCafeeTests : BehaviorSpec({
 
@@ -11,7 +11,7 @@ class MachineCafeeTests : BehaviorSpec({
     //WHEN
     //THEN
     given("une machine à café payante") {
-        val machine = MachineCafee(estPayante = true )
+        val machine = DrinkMachine(estPayante = true )
 
         When("je met 1 euro dans la machine"){
             machine.InsertCoin(1.0 )
@@ -39,7 +39,7 @@ class MachineCafeeTests : BehaviorSpec({
 
     given("une machine à café") {
 
-         val machine = MachineCafee(false)
+         val machine = DrinkMachine(false)
 
         `when`("je demande un thé avec un sucre et une touillette")  {
 
