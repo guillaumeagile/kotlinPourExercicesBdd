@@ -7,18 +7,47 @@ import org.example.coffeeMachine.MachineCafee
 
 class MachineCafeeTests : BehaviorSpec({
 
-    given("un machine à café") {
+    //GIVEN
+    //WHEN
+    //THEN
+    given("une machine à café payante") {
+        val machine = MachineCafee(estPayante = true )
 
-        val machine = MachineCafee()
+        When("je met 1 euro dans la machine"){
+            machine.InsertCoin(1.0 )
+            And ("je demande un thé avec un sucre et une touillette") {
+                var command = machine.Command( drink = Drink.Tea, sugar = 1, stick = 1 )
 
-        `when`("je demande un thé avec un sucre et une touillette") {
+                then("le message est envoyé au Drink Maker") {
+                    command shouldBe "T:1:1"
+                }
+            }
+        }
+
+        When("je met 0,1 euro dans la machine"){
+            machine.InsertCoin(0.1)
+            And("je demande un thé avec un sucre et une touillette") {
+                var command = machine.Command( drink = Drink.Tea, sugar = 1, stick = 1 )
+
+                then("le message est envoyé au Drink Maker") {
+
+                    command shouldBe "M:not enough money"
+                }
+            }
+        }
+    }
+
+    given("une machine à café") {
+
+         val machine = MachineCafee(false)
+
+        `when`("je demande un thé avec un sucre et une touillette")  {
 
             var command = machine.Command( drink = Drink.Tea, sugar = 1, stick = 1 )
 
             then("le message est envoyé au Drink Maker") {
 
-                command shouldBe "T:1:1"
-
+               command shouldBe "T:1:1"
             }
         }
 
@@ -31,7 +60,31 @@ class MachineCafeeTests : BehaviorSpec({
                 command shouldBe "H::"
 
             }
-    }
-}}
+        }
+
+        // nouveau cas de vérification  "C:2:0" (Drink maker makes 1 coffee with 2 sugars and a stick)
+       When("je demande un café avec 2 sucre et une touillette") {
+         var command = machine.Command(Drink.Coffee, 2, 1  )
+
+            then("le message est envoyé au Drink Maker") {
+
+                command shouldBe "C:2:0"
+
+            }
+       }
+
+        When("je demande un café avec 1 sucre et pas de touillette") {
+            var command = machine.Command(Drink.Coffee, 1, 0  )
+
+            then("le message est envoyé au Drink Maker") {
+
+                command shouldBe "C:1:"
+
+            }
+        }
+
+}
+
+}
 )
 
