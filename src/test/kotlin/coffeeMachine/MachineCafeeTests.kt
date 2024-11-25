@@ -14,7 +14,10 @@ class MachineCafeeTests : BehaviorSpec({
         val machine = DrinkMachine(true )
 
         When("je met 1 euro dans la machine"){
+            machine.Reset()
             machine.InsertCoin(1.0 )
+
+            machine.TotalAmount shouldBe 1.0
 
             And ("je demande un thé avec un sucre et une touillette") {
                 var command = machine.Command( drink = Drink.Tea, sugar = 1, stick = 1 )
@@ -26,7 +29,10 @@ class MachineCafeeTests : BehaviorSpec({
         }
 
         When("je met 0,1 euro dans la machine"){
+            machine.Reset()
             machine.InsertCoin(0.1)
+            machine.TotalAmount shouldBe 0.1
+
             And("je demande un thé avec un sucre et une touillette") {
                 var command = machine.Command( drink = Drink.Tea, sugar = 1, stick = 1 )
 
