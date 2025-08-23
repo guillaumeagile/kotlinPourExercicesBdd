@@ -2,7 +2,6 @@ package DavidRobertBDD
 
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
-import arrow.core.getOrElse
 
 class CreationFactureTests : BehaviorSpec({
 
@@ -11,18 +10,17 @@ class CreationFactureTests : BehaviorSpec({
         
         `when`("le montant de la facture est -10 €") {
             
-            // driver choisi : au niveau de l'entité métier avec Arrow-kt
+            // driver choisi : le niveau de l'entité métier avec son vocabulaire métier en français
             val resultatFacture = Facture.creer(-10.0)
 
-            then("la facture n'existe pas") {                
-                resultatFacture.isLeft() shouldBe true
+            then("la facture n'existe pas") {
+                resultatFacture.Echec() shouldBe true
             }         
             
-            then("l'erreur montant de facture négatif non autorisé") {
-                
-                resultatFacture.fold(
-                    { erreur -> erreur shouldBe "montant de facture négatif non autorisé" },
-                    { _ -> throw AssertionError("Devrait être une erreur") }
+            then("l'erreur doit être: montant de facture négatif non autorisé") {
+                resultatFacture.selon(
+                    siEchec = { err -> err shouldBe "montant de facture négatif non autorisé" },
+                    siSucces = { _ -> throw AssertionError("Devrait être une erreur") }
                 )
             }
         }
@@ -31,8 +29,17 @@ class CreationFactureTests : BehaviorSpec({
             val resultatFacture = Facture.creer(0.0)
             
             then("la facture est créée avec succès") {
-                resultatFacture.isRight() shouldBe true
-                resultatFacture.getOrElse { throw AssertionError("Devrait être un succès") }.montant shouldBe 0.0
+                resultatFacture.Succès() shouldBe true
+                
+                resultatFacture.siSucces { facture -> 
+                    facture.montant shouldBe 0.0 
+                }
+                
+                resultatFacture.selon(
+                    siEchec = { _ -> throw AssertionError("Devrait être une erreur") },
+                    siSucces = { facture -> facture.montant shouldBe 0.0 }
+                )
+                
             }
         }
     }
