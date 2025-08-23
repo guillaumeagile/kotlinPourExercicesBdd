@@ -10,7 +10,7 @@ class TenuesSpecificationsExecutables : BehaviorSpec({
     //            "cérémonie de mariage
 
     //regle
-    // le prix de la robe plus costume doit etre inférieur à 10% du budget local
+    // le prix de la robe plus costume doit etre inférieur à 10% du budget total
 
     context("le prix de la robe plus costume doit etre inférieur à 10% du budget local") {
 
