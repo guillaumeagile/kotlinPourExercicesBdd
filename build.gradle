@@ -45,15 +45,14 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
     implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.6.1")
 
+    // Arrow-kt pour la programmation fonctionnelle
+    implementation "io.arrow-kt:arrow-core:1.2.4"
 
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.3'
     testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.10.2'
 
     testImplementation "io.kotest:kotest-runner-junit5:$kotestVersion"
     testImplementation "io.kotest:kotest-assertions-core:$kotestVersion"
-
-
-
 }
 
 wrapper {
@@ -81,4 +80,3 @@ publishing {
         }
     }
 }
-

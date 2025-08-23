@@ -2,6 +2,7 @@ package DavidRobertBDD
 
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
+import arrow.core.getOrElse
 
 class CreationFactureTests : BehaviorSpec({
 
@@ -9,17 +10,29 @@ class CreationFactureTests : BehaviorSpec({
         // val professeur = Professeur("david.robert@um6.fr")
         
         `when`("le montant de la facture est -10 €") {
-            val montant = -10
+            
+            // driver choisi : au niveau de l'entité métier avec Arrow-kt
+            val resultatFacture = Facture.creer(-10.0)
+
+            then("la facture n'existe pas") {                
+                resultatFacture.isLeft() shouldBe true
+            }         
             
             then("l'erreur montant de facture négatif non autorisé") {
-                // Ici tu peux ajouter ton test
-                // Par exemple :
-                // shouldThrow<IllegalArgumentException> {
-                //     CreationFacture(professeur, montant)
-                // }.message shouldBe "montant de facture négatif non autorisé"
                 
-                // Pour l'instant, un test simple pour vérifier que ça fonctionne
-                montant shouldBe -10
+                resultatFacture.fold(
+                    { erreur -> erreur shouldBe "montant de facture négatif non autorisé" },
+                    { _ -> throw AssertionError("Devrait être une erreur") }
+                )
+            }
+        }
+        
+        `when`("le montant de la facture est 0 €") {
+            val resultatFacture = Facture.creer(0.0)
+            
+            then("la facture est créée avec succès") {
+                resultatFacture.isRight() shouldBe true
+                resultatFacture.getOrElse { throw AssertionError("Devrait être un succès") }.montant shouldBe 0.0
             }
         }
     }
