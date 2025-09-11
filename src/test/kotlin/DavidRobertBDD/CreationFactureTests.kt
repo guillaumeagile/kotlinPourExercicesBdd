@@ -5,20 +5,20 @@ import io.kotest.matchers.shouldBe
 
 class CreationFactureTests : BehaviorSpec({
 
-    given("un professeur identifié par son email david.robert@um6.fr") {
-        // val professeur = Professeur("david.robert@um6.fr")
+    given("je veux créer une facture") {
         
         `when`("le montant de la facture est -10 €") {
             
             // driver choisi : le niveau de l'entité métier avec son vocabulaire métier en français
             val resultatFacture = Facture.creer(-10.0)
 
-            then("la facture n'existe pas") {
+            then("la facture ne sera créée pas") {
                 resultatFacture.Echec() shouldBe true
             }         
             
             then("l'erreur doit être: montant de facture négatif non autorisé") {
-                resultatFacture.selon(
+
+            resultatFacture.selon(
                     siEchec = { err -> err shouldBe "montant de facture négatif non autorisé" },
                     siSucces = { _ -> throw AssertionError("Devrait être une erreur") }
                 )
