@@ -1,0 +1,5 @@
+package DavidRobertBDD
+
+class Administrateur {
+
+}

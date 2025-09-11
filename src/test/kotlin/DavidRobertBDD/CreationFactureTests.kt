@@ -5,12 +5,14 @@ import io.kotest.matchers.shouldBe
 
 class CreationFactureTests : BehaviorSpec({
 
-    given("je veux créer une facture") {
+    given("je suis artisan") {
+
+        val artisan = Artisan()
         
         `when`("le montant de la facture est -10 €") {
             
             // driver choisi : le niveau de l'entité métier avec son vocabulaire métier en français
-            val resultatFacture = Facture.creer(-10.0)
+            val resultatFacture = Facture.creer(artisan, -10.0)
 
             then("la facture ne sera créée pas") {
                 resultatFacture.Echec() shouldBe true
@@ -26,7 +28,7 @@ class CreationFactureTests : BehaviorSpec({
         }
         
         `when`("le montant de la facture est 0 €") {
-            val resultatFacture = Facture.creer(0.0)
+            val resultatFacture = Facture.creer(artisan, 0.0)
             
             then("la facture est créée avec succès") {
                 resultatFacture.Succès() shouldBe true
@@ -43,4 +45,23 @@ class CreationFactureTests : BehaviorSpec({
             }
         }
     }
+
+    given("je suis admnistrateur") {
+
+        val admin = Administrateur()
+
+        `when`("le montant de la facture est 10000 €") {
+
+            // driver choisi : le niveau de l'entité métier avec son vocabulaire métier en français
+            val resultatFacture = Facture.creer(admin, 10000.0)
+
+
+            then("") {
+
+                resultatFacture.selon(
+                    siEchec = { err -> err shouldBe "seul un artisan peut créer une facture" },
+                    siSucces = { _ -> throw AssertionError("Devrait être une erreur") }
+                )
+            }
+        }
 })
