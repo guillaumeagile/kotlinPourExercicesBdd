@@ -1,4 +1,4 @@
-package DavidRobertBDD
+package org.example.facturation
 
 import arrow.core.Either
 

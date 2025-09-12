@@ -2,12 +2,13 @@ package DavidRobertBDD
 
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
+import org.example.facturation.*
 
 class CreationFactureTests : BehaviorSpec({
 
     given("je suis artisan") {
 
-        val artisan = Artisan()
+        val artisan = Utilisateur.Artisan("foo@bar.com")
         
         `when`("le montant de la facture est -10 €") {
             
@@ -46,6 +47,7 @@ class CreationFactureTests : BehaviorSpec({
         }
     }
 
+    /* on ne peut écrire cela 
     given("je suis admnistrateur") {
 
         val admin = Administrateur()
@@ -53,10 +55,10 @@ class CreationFactureTests : BehaviorSpec({
         `when`("le montant de la facture est 10000 €") {
 
             // driver choisi : le niveau de l'entité métier avec son vocabulaire métier en français
-            val resultatFacture = Facture.creer(admin, 10000.0)
+            val resultatFacture = Facture.creer (admin, 10000.0)
 
 
-            then("") {
+            then("un administrateur") {
 
                 resultatFacture.selon(
                     siEchec = { err -> err shouldBe "seul un artisan peut créer une facture" },
@@ -64,4 +66,6 @@ class CreationFactureTests : BehaviorSpec({
                 )
             }
         }
+        
+     */
 })
