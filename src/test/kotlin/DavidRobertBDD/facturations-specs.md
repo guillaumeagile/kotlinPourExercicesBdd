@@ -13,7 +13,7 @@ User goal = créer une facture
 #### Exemples de scénarios:
 
 1. Création d'une facture avec un montant positif en tant que artisan
-1. Tentative de Création d'une facture avec un montant positif en tant que administrateur doit echouer
+1. Impossibilité de Création d'une facture en tant que administrateur
 2. Création d'une facture avec un montant nul
 3. Tentative de création d'une facture avec un montant négatif
 
@@ -25,7 +25,7 @@ Then: la facture est créée avec succès
 
 Question: comment je sais que je suis un artisan ?
 
-##### scenario 2
+##### scenario 2 -> impossible sur le domaine model
 
 Given: je suis un administrateur
 When: je crée une facture avec un montant positif
@@ -33,9 +33,21 @@ Then: la facture n'est pas crée avec motif "seul un artisan peut créer une fac
 
 #### Exemples de scénarios:
 
-1. Validation du format du numéro de facture
-2. Validation de la date de facture
+1. génération du format du numéro de facture => contient la date Anneé+mois suivi de 4 chiffres numérotés en séquence ,
+   ex : FACT-2023-09-0001
+2. génération de la date de facture
 3. Validation du client associé à la facture
+
+##### scenario 3-1 ->
+
+Given je suis un artisan
+When je créé une facture , parce que la date du jour est 2400-09-01
+Then la facture doit avoir une date un numero : FACT-2400-09-0001
+
+Given je suis un artisan
+And j'ai crée une facture , parce que la date du jour est 2400-09-01
+Given je créé une 2e facture le même jour
+Then la 2e facture doit avoir une date un numero : FACT-2400-09-0002
 
 ## Épic 3: Gestion des factures
 
