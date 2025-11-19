@@ -13,7 +13,7 @@ class AnnotationSpecTest : AnnotationSpec() {
     @Test
     fun `should concatenate strings`() {
         val result = "hello" + " " + "world"
-        result shouldContain "hello"
+        result shouldContain "world"
     }
     
     @Test
